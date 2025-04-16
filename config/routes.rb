@@ -14,5 +14,11 @@ Rails.application.routes.draw do
     # Defines the root path route ("/")
     # root "posts#index"
     root "products#index"
-    resources :products
+    
+    # subscribe users to a specific product
+    resources :products do
+        resources :subscribers, only: [ :create ]
+      end
+    resource :unsubscribe, only: [ :show ]
+    
 end

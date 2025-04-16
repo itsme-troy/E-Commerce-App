@@ -1,0 +1,13 @@
+Good news!
+
+<%= @product.name %> is back in stock.
+
+
+<%# use product_url since clients need to know the full URL to open browser when link is clicked%>
+<%= product_url(@product) %>
+
+<%# When the unsubscribe link is clicked, the subscriber 
+record will be deleted from the database.
+ The controller also safely handles invalid 
+ or expired tokens without raising any errors.%> 
+Unsubscribe: <%= unsubscribe_url(token: params[:subscriber].generate_token_for(:unsubscribe)) %>

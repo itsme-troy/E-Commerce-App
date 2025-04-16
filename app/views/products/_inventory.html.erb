@@ -1,0 +1,14 @@
+<%# check if there is inventory and display the amount in stock. Otherwise, we can display an out of stock message %>
+
+<% if product.inventory_count? %>
+    <p><%= product.inventory_count %> in stock</p>
+
+<% else %>
+    <p>Out of stock</p>
+    <p>Email me when available.</p>
+
+<%= form_with model: [product, Subscriber.new] do |form| %>
+    <%= form.email_field :email, placeholder: "you@example.com", required: true %>
+    <%= form.submit "Submit" %>
+  <% end %>
+<% end %>
