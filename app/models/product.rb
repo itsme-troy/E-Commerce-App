@@ -21,8 +21,8 @@ class Product < ApplicationRecord
     def back_in_stock?
       inventory_count_previously_was.zero? && inventory_count > 0
     end
-  
-    # uses the Active Record association to query the subscribers table 
+
+    # uses the Active Record association to query the subscribers table
     # for all subscribers for this specific product and then queues
     # up the in_stock email to be sent to each of them.
     def notify_subscribers
@@ -30,6 +30,4 @@ class Product < ApplicationRecord
         ProductMailer.with(product: self, subscriber: subscriber).in_stock.deliver_later
       end
     end
-
 end
-
