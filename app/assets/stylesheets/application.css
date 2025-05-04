@@ -37,15 +37,191 @@
     color: green;
   }
   
-  section.product {
+  .top-nav {
     display: flex;
-    gap: 1rem;
-    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #ccc;
   }
-  
-  section.product img {
+
+  .top-nav a {
+    margin-left: 15px;
+    text-decoration: none;
+    color: #007bff;
+  }
+  .top-nav a:hover {
+    text-decoration: underline;
+  }
+  .top-nav .right {
+    display: flex;
+    gap: 10px;
+  }
+
+  #products {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+    padding: 20px;
+  }
+
+  .product-card {
+    border: 1px solid #ddd;
+    padding: 16px;
+    background-color: #fff;
     border-radius: 8px;
-    flex-basis: 50%;
-    max-width: 50%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease-in-out;
   }
   
+  .product-card:hover {
+    transform: scale(1.02);
+  }
+
+  .product-card h2 {
+    margin: 0;
+    font-size: 1.1rem;
+  }
+  .product-card a {
+    text-decoration: none;
+    color: #007bff;
+  }
+  .product-card a:hover {
+    text-decoration: underline;
+  }
+
+
+  .back-link {
+    margin: 20px;
+    display: inline-block;
+    color: #007bff;
+    text-decoration: none;
+  }
+
+  .back-link:hover {
+    text-decoration: underline;
+  }
+  
+.product-detail {
+    display: flex;
+    gap: 40px;
+    padding: 20px;
+    align-items: flex-start;
+  }
+  .product-image img {
+    width: 400px;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
+  
+  .product-info {
+    max-width: 500px;
+  }
+  .product-info h1 {
+    margin-top: 0;
+  }
+  .product-description {
+    margin: 10px 0 20px;
+  }
+  .product-actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 15px;
+  }
+
+  /* General .btn style applied to both links and buttons */
+.btn {
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 14px;
+    cursor: pointer;
+    display: inline-block;
+  }
+
+  .product-actions .btn {
+    padding: 8px 12px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .product-actions .btn.delete {
+    background-color: #dc3545;
+  }
+  .product-actions .btn:hover {
+    opacity: 0.9;
+  }
+
+
+
+
+
+  .product-form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 24px;
+    background-color: #fdfdfd;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+  }
+  
+  .form-control {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  .form-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  
+  .form-actions .btn {
+    padding: 10px 18px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .form-actions .btn:hover {
+    opacity: 0.9;
+  }
+  
+  .cancel-link {
+    color: #6c757d;
+    text-decoration: none;
+    font-size: 14px;
+  }
+  
+  .cancel-link:hover {
+    text-decoration: underline;
+  }
+  
+  .input-with-unit {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }

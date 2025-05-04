@@ -23,10 +23,19 @@
   </head>
 
   <body>
-    <nav>
-        <%= link_to "Home", root_path %>
-        <%= link_to "Login", new_session_path unless authenticated? %>
-        <%= button_to "Log out", session_path, method: :delete if authenticated? %>
+    <nav class="top-nav">
+        <div class="left">
+            <%= link_to "Home", root_path %>
+        </div>
+
+        <div class="right"> 
+            <% if authenticated? %>
+                <%= link_to "Categories", categories_path %>
+                <%= link_to "New product", new_product_path %>
+                <%= button_to "Log out", session_path, method: :delete if authenticated? %>
+            <% end %>
+            <%= link_to "Login", new_session_path unless authenticated? %>
+        </div> 
     </nav>
     <%#  %> 
     

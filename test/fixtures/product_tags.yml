@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  product: one
+  tag: one
+  date_created: 2025-05-01 10:18:21
+
+two:
+  product: two
+  tag: two
+  date_created: 2025-05-01 10:18:21

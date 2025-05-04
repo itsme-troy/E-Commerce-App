@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_16_024404) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_02_053100) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -49,11 +49,53 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_16_024404) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "admins", force: :cascade do |t|
+    t.string "email"
+    t.string "password"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "date_created"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "customers", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.string "street"
+    t.string "phone"
+    t.string "email"
+    t.string "password"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "product_tags", force: :cascade do |t|
+    t.integer "product_id", null: false
+    t.integer "tag_id", null: false
+    t.datetime "date_created"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_product_tags_on_product_id"
+    t.index ["tag_id"], name: "index_product_tags_on_tag_id"
+  end
+
   create_table "products", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "inventory_count"
+    t.string "image"
+    t.text "description"
+    t.decimal "price"
+    t.integer "category_id"
+    t.integer "created_by_id"
+    t.index ["category_id"], name: "index_products_on_category_id"
+    t.index ["created_by_id"], name: "index_products_on_created_by_id"
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -73,6 +115,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_16_024404) do
     t.index ["product_id"], name: "index_subscribers_on_product_id"
   end
 
+  create_table "tags", force: :cascade do |t|
+    t.string "name"
+    t.string "tag_type"
+    t.integer "created_by"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email_address", null: false
     t.string "password_digest", null: false
@@ -83,6 +133,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_16_024404) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "product_tags", "products"
+  add_foreign_key "product_tags", "tags"
+  add_foreign_key "products", "admins", column: "created_by_id"
+  add_foreign_key "products", "categories"
   add_foreign_key "sessions", "users"
   add_foreign_key "subscribers", "products"
 end
