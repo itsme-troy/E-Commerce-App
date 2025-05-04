@@ -1,0 +1,26 @@
+<h1>Sign Up</h1>
+
+<%# 
+- `model: @user` binds the form to the `@user` object so Rails knows which fields to generate.
+- `local: true` ensures the form submits via a full page reload (not using AJAX).
+- `|form|` yields a form object that is used to build input fields.
+%> 
+
+<%= form_with model: @user, local: true do |form| %>
+  <div>
+    <%= form.label :email_address %>
+    <%= form.text_field :email_address %>
+  </div>
+
+  <div>
+    <%= form.label :password %>
+    <%= form.password_field :password %>
+  </div>
+
+  <div>
+    <%= form.label :password_confirmation %>
+    <%= form.password_field :password_confirmation %>
+  </div>
+
+  <%= form.submit "Register" %>
+<% end %>

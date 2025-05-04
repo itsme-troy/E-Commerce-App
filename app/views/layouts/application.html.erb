@@ -33,8 +33,11 @@
                 <%= link_to "Categories", categories_path %>
                 <%= link_to "New product", new_product_path %>
                 <%= button_to "Log out", session_path, method: :delete if authenticated? %>
+            <% else %> 
+                <%= link_to "Sign up", new_user_path %> |
+                <%= link_to "Login", new_session_path unless authenticated? %>
             <% end %>
-            <%= link_to "Login", new_session_path unless authenticated? %>
+         
         </div> 
     </nav>
     <%#  %> 

@@ -1,4 +1,7 @@
 class SessionsController < ApplicationController
+  # Guests are allowed to access the sign-up form and submit registration
+  skip_before_action :require_authentication, only: [:new, :create]
+
   allow_unauthenticated_access only: %i[ new create ]
   rate_limit to: 10, within: 3.minutes, only: :create, with: -> { redirect_to new_session_url, alert: "Try again later." }
 

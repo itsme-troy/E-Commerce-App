@@ -14,3 +14,10 @@ Category.create!([
   { name: "Electronics" }
 ])
 
+
+
+User.create!(
+  email_address: "admin@gmail.com",
+  password: "admin",
+  role: "admin"
+)
