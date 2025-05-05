@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  namespace :admin do
+    get "users/index"
+    get "users/edit"
+    get "users/update"
+    get "users/destroy"
+  end
     resources :categories
     resource :session
     resources :passwords, param: :token
@@ -25,4 +31,8 @@ Rails.application.routes.draw do
       end
     resource :unsubscribe, only: [ :show ]
 
+    namespace :admin do
+        resources :users, only: [:index, :edit, :update, :destroy]
+    end
+    
 end

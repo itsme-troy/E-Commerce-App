@@ -1,16 +1,18 @@
-<p style="color: green"><%= notice %></p>
+
+<%# layout cards in a grid format %> 
 
 <% content_for :title, "Categories" %>
 
-<h1>Categories</h1>
+<div class="header-container">
+    <h1 class="page-title">Categories</h1>
+    <div class="header-buttons">
+        <%= link_to "New category", new_category_path, class: "btn new-category" %>
+    </div> 
+</div> 
 
-<div id="categories">
+<div class="categories-grid">
   <% @categories.each do |category| %>
     <%= render category %>
-    <p>
-      <%= link_to "Show this category", category %>
-    </p>
   <% end %>
 </div>
 
-<%= link_to "New category", new_category_path %>

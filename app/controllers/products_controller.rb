@@ -47,12 +47,13 @@ class ProductsController < ApplicationController
     end
 
     private
+        # restricts access for customers vs admin 
         def require_admin
             unless current_user&.role == 'admin'
             redirect_to root_path, alert: "Access denied."
             end
         end
-        
+
         def set_product
             @product = Product.find(params[:id])
         end

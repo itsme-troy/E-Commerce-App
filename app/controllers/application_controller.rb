@@ -15,4 +15,10 @@ class ApplicationController < ActionController::Base
   end
   
   helper_method :current_user  # so I can use it in views too
+
+  def require_admin
+    unless current_user&.role == "admin"
+      redirect_to root_path, alert: "Admins only!"
+    end
+  end
 end
