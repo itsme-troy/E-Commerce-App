@@ -1,3 +1,4 @@
+# Manages signing up of account & Creating a new user account 
 
 # defines a controller named 'UserController' 
 # inherit from application controller to access rails controller features (like `params`, `session`, `redirect_to`, etc.).
@@ -10,11 +11,10 @@ skip_before_action :require_authentication, only: [:new, :create]
   # initialize a new empty User object (@user) that the form will bind to 
   def new
     @user = User.new
-
   end
 
   # Action triggered when the registration form is submitted.
-  # Creates a new 'User' instance with form data filtered 
+  # Creates a new 'Ususer.sessions.create!' instance with form data filtered 
   # by the 'user_params' method (to prevent mass assignment vulnerabilities).
   def create
     @user = User.new(user_params)

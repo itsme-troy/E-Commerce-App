@@ -1,12 +1,25 @@
-<h1><%= t ".title" %></h1>
 
-<div id="products">
+<div class="header-container">
+    <h1 class="page-title">Products</h1>
+    <div class="header-buttons">
+        <%= link_to "New Product", new_product_path, class: "btn new-category" %>
+    </div> 
+</div> 
+
+
+<table class="product-table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Price</th>
+    </tr>
+  </thead>
+  <tbody>
     <% @products.each do |product| %>
-        <div class="product-card">
-            
-            <h2><%= link_to product.name, product_path(product) %></h2>
-             <p><%= number_to_currency(product.price) if product.price.present? %></p>
-        </div>
+      <tr onclick="window.location='<%= product_path(product) %>'" style="cursor: pointer;">
+        <td><%= product.name %></td>
+        <td><%= number_to_currency(product.price) if product.price.present? %></td>
+      </tr>
     <% end %>
-</div>
-
+  </tbody>
+</table>

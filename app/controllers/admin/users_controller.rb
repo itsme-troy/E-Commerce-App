@@ -6,7 +6,10 @@
 
 class Admin::UsersController < ApplicationController
     # before_action :require_admin
+    before_action :set_user, only: [:show, :edit, :update, :destroy]
   
+    def show
+    end
     # list all users in the system 
     def index
       @users = User.all
@@ -14,13 +17,11 @@ class Admin::UsersController < ApplicationController
 
     # fetch specific user based on passed ID 
     def edit
-      @user = User.find(params[:id])
-end
+    end
   
     # fetch specific user based on passed ID 
     # update their details 
     def update
-      @user = User.find(params[:id])
       if @user.update(user_params)
         redirect_to admin_users_path, notice: "User updated"
       else
@@ -31,7 +32,6 @@ end
     # Finds the user and deletes them.
     # Then redirects back to the list with a confirmation message.
     def destroy
-      @user = User.find(params[:id])
       @user.destroy
       redirect_to admin_users_path, notice: "User deleted"
     end
@@ -45,5 +45,9 @@ end
     def user_params
       params.require(:user).permit(:email_address, :role)
     end
+
+    def set_user
+        @user = User.find(params[:id])
+      end
   end
   

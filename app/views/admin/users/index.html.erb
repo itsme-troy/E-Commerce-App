@@ -5,18 +5,13 @@
     <tr>
       <th>Email</th>
       <th>Role</th>
-      <th>Actions</th>
     </tr>
   </thead>
   <tbody>
     <% @users.each do |user| %>
-      <tr>
+      <tr onclick="window.location='<%= admin_user_path(user) %>'" style="cursor: pointer;">
         <td><%= user.email_address %></td>
         <td><%= user.role %></td>
-        <td>
-          <%= link_to "Edit", edit_admin_user_path(user), class: "btn edit" %>
-          <%= link_to "Delete", admin_user_path(user), method: :delete, data: { confirm: "Are you sure?" }, class: "btn delete" %>
-        </td>
       </tr>
     <% end %>
   </tbody>

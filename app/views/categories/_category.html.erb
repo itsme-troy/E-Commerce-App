@@ -1,6 +1,5 @@
 <%# wrap each category in a card %> 
 
-
 <%= link_to category_path(category), class: "category-card-link" do %>
     <div class="category-card" id="<%= dom_id(category) %>">
         <h3><%= category.name %></h3>
