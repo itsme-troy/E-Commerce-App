@@ -3,13 +3,15 @@
 <table class="user-table">
   <thead>
     <tr>
+      <th class="counter-col"> </th> 
       <th>Email</th>
       <th>Role</th>
     </tr>
   </thead>
   <tbody>
-    <% @users.each do |user| %>
+    <% @users.each_with_index do |user, index| %>
       <tr onclick="window.location='<%= admin_user_path(user) %>'" style="cursor: pointer;">
+        <td> <%= index + 1 %> </td> 
         <td><%= user.email_address %></td>
         <td><%= user.role %></td>
       </tr>

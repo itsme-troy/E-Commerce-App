@@ -5,7 +5,11 @@ class ProductsController < ApplicationController
     before_action :set_product, only: %i[ show edit update destroy]
 
     def index
-        @products = Product.all
+        if params[:query].present?
+            @products = Product.where("name LIKE ?", "%#{params[:query]}%")
+        else
+            @products = Product.all
+        end
     end
 
     def show
@@ -60,7 +64,7 @@ class ProductsController < ApplicationController
 
         # Only allow a list of trusted parameters through.
         def product_params
-            params.require(:product).permit(:name, :description, :featured_image, :inventory_count)
+            params.require(:product).permit(:name, :price, :description, :featured_image, :inventory_count)
         end
 
         # ensures if inventory count is blank or deleted, rails treat it as default 0

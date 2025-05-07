@@ -10,9 +10,10 @@
     </div> 
 </div> 
 
+<%# hides description initially %> 
 <div class="categories-grid">
   <% @categories.each do |category| %>
-    <%= render category %>
+    <%= render category, hide_description: true %>
   <% end %>
 </div>
 

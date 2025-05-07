@@ -6,13 +6,14 @@
   }
   
   .category-card {
+    max-width: 1000px;
+    margin: 24px auto 0; /* auto centers horizontally */
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 15px;
     background-color: #f9f9f9;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     text-align: center;
     transition: transform 0.2s ease-in-out;
-    margin-top: 24px; 
   }
   
   .category-card:hover {
@@ -115,9 +116,6 @@
   }
   
 
-
-
-
   .category-form-container {
     max-width: 400px;
     margin: 2rem auto;
@@ -167,5 +165,71 @@
     margin-top: 1rem;
     display: block;
     text-align: center;
+  }
+  
+
+
+
+
+  .edit-category-card {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    border-radius: 12px;
+    background-color: #fefefe;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  }
+  
+  .edit-category-card h1 {
+    text-align: center;
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+    color: #333;
+  }
+  
+  .edit-category-card label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.4rem;
+    color: #444;
+  }
+  
+  .edit-category-card input[type="text"],
+  .edit-category-card textarea {
+    width: 100%;
+    padding: 0.65rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .edit-category-card input[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .edit-category-card input[type="submit"]:hover {
+    background-color: #0069d9;
+  }
+  
+  .edit-category-card .links {
+    margin-top: 1.5rem;
+    text-align: center;
+  }
+  
+  .edit-category-card .links a {
+    margin: 0 0.5rem;
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .edit-category-card .links a:hover {
+    text-decoration: underline;
   }
   

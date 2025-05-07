@@ -163,8 +163,9 @@
     text-decoration: none;
     font-size: 15px;
     cursor: pointer;
-    display: inline-block;
-    
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     min-width: 80px;
     height: 35px;
     line-height: 25px;
@@ -189,15 +190,6 @@
     opacity: 0.9;
   }
 
-  .product-form {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 24px;
-    background-color: #fdfdfd;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  }
-  
   .form-group {
     margin-bottom: 20px;
   }
@@ -328,4 +320,11 @@
   .readonly-field {
     background-color: #e9ecef;
     cursor: not-allowed;
+  }
+
+
+  /* Make counter column narrower */
+.counter-col {
+    width: 40px;
+    text-align: center;
   }

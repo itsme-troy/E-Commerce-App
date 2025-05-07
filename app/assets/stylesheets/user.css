@@ -1,0 +1,52 @@
+.user-card {
+    max-width: 800px;
+    padding: 25px;
+    border-radius: 15px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-top: 2rem;
+    text-align: center;
+  }
+  
+  .user-card h2.user-email {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    word-break: break-word;
+  }
+  
+  .user-card .user-role {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+  }
+  
+  .user-card .button-group {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  .user-card .btn {
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    font-weight: 600;
+    color: white;
+    cursor: pointer;
+    border: none;
+  }
+  
+  .user-card .btn-primary {
+    background-color: #007bff;
+  }
+  
+  .user-card .btn-primary:hover {
+    background-color: #0056b3;
+  }
+  
+  .user-card .btn-danger {
+    background-color: #dc3545;
+  }
+  
+  .user-card .btn-danger:hover {
+    background-color: #b52a37;
+  }
+  
