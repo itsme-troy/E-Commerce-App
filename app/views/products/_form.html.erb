@@ -1,14 +1,17 @@
 
 <%# display error messages %>
+
 <% if product.errors.any? %>
-  <div class="error-messages">
-    <h3><%= pluralize(product.errors.count, "error") %> prevented this product from being saved:</h3>
-    <ul>
-      <% product.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-    </ul>
-  </div>
+    <div class="alert-box">
+        <button class="close-btn" onclick="this.parentElement.style.display='none';">&times;</button>
+        
+        <p><%= pluralize(product.errors.count, "error") %> prevented this product from being saved:</p>
+        <ul>
+            <% product.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+        </ul>
+    </div>
 <% end %>
 
 <%= form_with model: product, html: { multipart:true, class: "product-form" } do |form| %>

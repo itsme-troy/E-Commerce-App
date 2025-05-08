@@ -1,15 +1,18 @@
-<%= form_with(model: category) do |form| %>
-  <% if category.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(category.errors.count, "error") %> prohibited this category from being saved:</h2>
+  <% if category.errors.any? %> 
+    <div class="alert-box"> 
+        <button class="close-btn" onclick="this.parentElement.style.display='none';">&times;</button>
+        
+        <p><%= pluralize(category.errors.count, "error") %> prohibited this category from being saved:</p>
 
-      <ul>
-        <% category.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+        <ul>
+            <% category.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+            <% end %>
+        </ul>
     </div>
   <% end %>
+
+<%= form_with(model: category) do |form| %>
 
   <div>
     <%= form.label :name, style: "display: block" %>
@@ -21,7 +24,7 @@
     <%= form.text_area :description, rows: 3, class: "form-control" %> 
   </div> 
   
-  <div>
-    <%= form.submit %>
-  </div>
+
+  <%= form.submit "Create Category", class: "btn-success" %>
+
 <% end %>

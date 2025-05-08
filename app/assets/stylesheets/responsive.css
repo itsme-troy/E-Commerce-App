@@ -1,0 +1,54 @@
+/* Show full text by default */
+.button-text {
+    display: inline;
+  }
+  
+
+/* Hide text on small screens */
+@media (max-width: 1200px) {
+    .button-text {
+        display: none;
+    }
+    
+    .responsive-button {
+        margin-left: 10px;
+        padding: 6px;
+        min-width: auto;
+        width: 35px;
+        height: 35px;
+        font-size: 0; /* hide text visually */
+        }
+    .responsive-button i {
+        margin-left: 5px;
+        font-size: 0.9rem; /* keep icon visible */
+    }
+    .responsive-button .button-text {
+        display: none;
+        }
+    
+    }
+      
+  /* Hide text on small screens */
+  @media (max-width: 600px) {
+    .button-text {
+      display: none;
+    }
+  
+    .responsive-button {
+        margin-left: 10px;
+        padding: 6px;
+        min-width: auto;
+        width: 35px;
+        height: 35px;
+        font-size: 0; /* hide text visually */
+      }
+    .responsive-button i {
+        margin-left: 5px;
+        font-size: 0.9rem; /* keep icon visible */
+    }
+    .responsive-button .button-text {
+        display: none;
+      }
+    
+  }
+  

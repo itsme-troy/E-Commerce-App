@@ -5,12 +5,23 @@ class ProductsController < ApplicationController
     before_action :set_product, only: %i[ show edit update destroy]
 
     def index
-        if params[:query].present?
-            @products = Product.where("name LIKE ?", "%#{params[:query]}%")
-        else
-            @products = Product.all
+        @categories = Category.all
+      
+        # Start with all products
+        @products = Product.all
+      
+        # Filter by category if category_id param is present
+        if params[:category_id].present?
+          @products = @products.where(category_id: params[:category_id])
         end
-    end
+      
+        # Apply search filter if query is present
+        if params[:query].present?
+          @products = @products.where("name LIKE ?", "%#{params[:query]}%")
+        end
+      end
+
+
 
     def show
     end
@@ -64,7 +75,7 @@ class ProductsController < ApplicationController
 
         # Only allow a list of trusted parameters through.
         def product_params
-            params.require(:product).permit(:name, :price, :description, :featured_image, :inventory_count)
+            params.require(:product).permit(:name, :price, :description, :featured_image, :inventory_count, :category_id)
         end
 
         # ensures if inventory count is blank or deleted, rails treat it as default 0

@@ -1,4 +1,4 @@
-<h1 class="form-title">Edit User</h1>
+<h3 class="page-title text-center">Edit User</h3>
 
 <div class="edit-user-form">
   <%= form_with model: [:admin, @user], local: true do |form| %>
@@ -12,6 +12,6 @@
       <%= form.select :role, ["admin", "customer"], {}, class: "form-control" %>
     </div>
 
-    <%= form.submit "Update", class: "btn btn-submit" %>
+    <%= form.submit "Update", class: "btn edit" %>
   <% end %>
 </div>

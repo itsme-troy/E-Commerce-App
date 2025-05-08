@@ -1,35 +1,60 @@
+<div class="products-page">
 
-<div class="header-container">
-    <h1 class="page-title">Products</h1>
-    <div class="header-buttons">
-        <%= link_to "New Product", new_product_path, class: "btn new-category" %>
+  <!-- Sidebar Filter -->
+  <aside class="sidebar">
+    <h5>Filter by Category</h5>
+    <ul class="category-list">
+      <% @categories.each do |category| %>
+        <li>
+          <%= link_to category.name, products_path(category_id: category.id), 
+            class: (params[:category_id].to_i == category.id ? "active" : "") %>
+        </li>
+      <% end %>
+    </ul>
+  </aside>
 
-       <%= form_with url: products_path, method: :get, local: true, class: "search-form" do %>
-            <div class="search-wrapper">
-                <%= text_field_tag :query, params[:query], placeholder: "Search products...", class: "search-input" %>
-                    <button type="submit" class="search-icon-btn">
-                        <i class="fas fa-search"></i>
-                    </button>
-            </div>
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="header-container">
+      <h1 class="page-title">Products</h1>
+      <div class="header-buttons">
+        <%= link_to new_product_path, class: "btn btn-success icon-spacing responsive-button" do %>
+            <i class="fas fa-plus"></i>
+            <span class="button-text">New</span>
         <% end %>
-    </div> 
-</div> 
 
-<table class="product-table">
-  <thead>
-    <tr>
-      <th class="counter-col"> </th> 
-      <th>Name</th>
-      <th>Price</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @products.each_with_index do |product, index| %>
-      <tr onclick="window.location='<%= product_path(product) %>'" style="cursor: pointer;">
-        <td><%= index + 1 %></td>
-        <td><%= product.name %></td>
-        <td><%= number_to_currency(product.price) if product.price.present? %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+       
+        <%= form_with url: products_path, method: :get, local: true, class: "search-form" do %>
+          <div class="search-wrapper">
+            <%= text_field_tag :query, params[:query], placeholder: "Search products...", class: "search-input" %>
+            <button type="submit" class="search-icon-btn">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+        <% end %>
+      </div> 
+    </div>
+
+    <!-- Product Table -->
+    <table class="product-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @products.each_with_index do |product, index| %>
+          <tr onclick="window.location='<%= product_path(product) %>'" style="cursor: pointer;">
+            <td><%= index + 1 %></td>
+            <td><%= product.name %></td>
+            <td><%= product.category&.name || "Uncategorized" %></td>
+            <td><%= number_to_currency(product.price) if product.price.present? %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
