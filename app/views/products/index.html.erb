@@ -36,7 +36,7 @@
     </div>
 
     <!-- Product Table -->
-    <table class="product-table">
+    <table class="table">
       <thead>
         <tr>
           <th>#</th>
@@ -48,7 +48,7 @@
       <tbody>
         <% @products.each_with_index do |product, index| %>
           <tr onclick="window.location='<%= product_path(product) %>'" style="cursor: pointer;">
-            <td><%= index + 1 %></td>
+            <td class="counter-col"> <%= index + 1 %></td>
             <td><%= product.name %></td>
             <td><%= product.category&.name || "Uncategorized" %></td>
             <td><%= number_to_currency(product.price) if product.price.present? %></td>

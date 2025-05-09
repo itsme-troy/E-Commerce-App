@@ -75,7 +75,7 @@ class ProductsController < ApplicationController
 
         # Only allow a list of trusted parameters through.
         def product_params
-            params.require(:product).permit(:name, :price, :description, :featured_image, :inventory_count, :category_id)
+            params.require(:product).permit(:name, :price, :description, :featured_image, :inventory_count, :category_id, tag_ids: [])
         end
 
         # ensures if inventory count is blank or deleted, rails treat it as default 0

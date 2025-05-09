@@ -1,0 +1,30 @@
+
+
+<div class="header-container">
+    <h1 class= "page-title">Tags</h1>
+
+    <div class="header-buttons"> 
+        <%= link_to "New Tag", new_tag_path, class: "btn btn-success" %>
+
+    </div> 
+</div> 
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tags.each_with_index do |tag, index| %>
+      <tr onclick="window.location='<%= tag_path(tag) %>'" style="cursor: pointer;">
+        <td class="counter-col"> <%= index + 1 %></td>
+        <td><%= tag.name %></td>
+
+      
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

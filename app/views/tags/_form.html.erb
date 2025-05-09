@@ -1,0 +1,23 @@
+
+<%# display error messages %>
+<% if tag.errors.any? %>
+    <div class="alert-box">
+        <button class="close-btn" onclick="this.parentElement.style.display='none';">&times;</button>
+        
+        <p><%= pluralize(tag.errors.count, "error") %> prevented this tag from being saved:</p>
+        <ul>
+            <% tag.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+        </ul>
+    </div>
+<% end %>
+
+<%= form_with model: tag do |form| %>
+  <div class="form-group">
+    <%= form.label :name %>
+    <%= form.text_field :name, class: "form-control" %>
+  </div>
+
+  <%= form.submit class: "btn btn-success" %>
+<% end %>

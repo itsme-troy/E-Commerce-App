@@ -20,6 +20,10 @@
     <%# Render this partial %> 
     <%= render "inventory", product: @product %>
 
+    <p><strong>Tags:</strong>
+        <%= @product.tags.map(&:name).join(", ") %>
+    </p>
+
     <% if authenticated? %>
         <div class="product-actions">
             <%= link_to "Update", edit_product_path(@product), class: "btn edit" %>

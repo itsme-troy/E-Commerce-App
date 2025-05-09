@@ -12,6 +12,9 @@
  body {
     font-family: Arial, Helvetica, sans-serif;
     padding: 1rem;
+    background-color: #f4f4f4; /* softer light gray */
+    color: #333; /* dark gray text for contrast */
+
   }
   
   nav {
@@ -132,24 +135,24 @@
   }
 
 
-  .product-table {
+  .table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 2rem;
   }
   
-  .product-table th,
-  .product-table td {
+  .table th,
+  .table td {
     padding: 0.75rem 1rem;
     border: 1px solid #ddd;
     text-align: left;
   }
   
-  .product-table th {
+  .table th {
     background-color: #f9f9f9;
   }
 
-  .product-table tr:hover {
+  .table tr:hover {
     background-color: #f1f1f1;
   }
 
@@ -375,3 +378,25 @@
   .icon-spacing {
     margin-right: 4px; /* adjust as needed */
   }
+
+
+
+.action-cell {
+    width: 250px; /* Set a fixed or flexible width */
+    max-width: 300px; /* Optional: Limit maximum width */
+    overflow: visible; /* Ensure content is fully visible */
+    white-space: normal; /* Allow text wrapping */
+    padding: 0.5rem; /* Add padding for spacing */
+    vertical-align: middle; /* Align content vertically */
+    text-align: center; /* Center align text */
+}
+
+.action-buttons {
+    display: flex;
+    font-size: .9em; /* Smaller font size */
+    padding: 4px 8px;  /* Smaller padding */
+    margin: 2px;  
+    gap: 0.25rem;  /* Spacing between buttons */
+    flex-wrap: wrap;  /* Allow buttons to wrap in smaller screens */
+}
+

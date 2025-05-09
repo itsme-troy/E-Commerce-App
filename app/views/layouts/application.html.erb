@@ -43,6 +43,7 @@
             <% if authenticated? %>
                 <%= link_to "Admin Panel", admin_users_path %>
                 <%= link_to "Categories", categories_path %>
+                <%= link_to "Tags", tags_path %>
                 <%= button_to "Log out", session_path, method: :delete if authenticated? %>
             <% else %> 
                 <%= link_to "Sign up", new_user_path %> |
