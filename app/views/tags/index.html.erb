@@ -4,12 +4,24 @@
     <h1 class= "page-title">Tags</h1>
 
     <div class="header-buttons"> 
-        <%= link_to "New Tag", new_tag_path, class: "btn btn-success" %>
+       
+        <%= link_to new_tag_path, class: "btn btn-success icon-spacing responsive-button" do %> 
+                <i class="fas fa-plus"></i>
+              <span class="button-text">New</span>
+        <% end %> 
 
+        <%= form_with url: tags_path, method: :get, local: true, class: "search-form" do %>
+            <div class="search-wrapper">
+                <%= text_field_tag :query, params[:query], placeholder: "Search tags...", class: "search-input" %>
+                <button type="submit" class="search-icon-btn">
+                <i class="fas fa-search"></i>
+                </button>
+            </div>
+        <% end %>
     </div> 
 </div> 
 
-<table class="table">
+<table class="table table-hover table-bordered">
   <thead>
     <tr>
       <th>#</th>
@@ -21,7 +33,6 @@
       <tr onclick="window.location='<%= tag_path(tag) %>'" style="cursor: pointer;">
         <td class="counter-col"> <%= index + 1 %></td>
         <td><%= tag.name %></td>
-
       
         </td>
       </tr>

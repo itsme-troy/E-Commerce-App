@@ -6,7 +6,11 @@
 <div class="header-container">
     <h2 class="page-title">Categories</h2>
     <div class="header-buttons">
-        <%= link_to "New category", new_category_path, class: "btn btn-success" %>
+        
+      <%= link_to new_category_path, class: "btn btn-success icon-spacing responsive-button" do %>
+            <i class="fas fa-plus"></i>
+            <span class="button-text">New</span>
+        <% end %>
     </div> 
 </div> 
 

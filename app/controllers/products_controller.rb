@@ -9,7 +9,8 @@ class ProductsController < ApplicationController
       
         # Start with all products
         @products = Product.all
-      
+        @products = @products.where(price: params[:min_price]..params[:max_price]) if params[:min_price].present? && params[:max_price].present?
+
         # Filter by category if category_id param is present
         if params[:category_id].present?
           @products = @products.where(category_id: params[:category_id])
@@ -21,8 +22,6 @@ class ProductsController < ApplicationController
         end
       end
 
-
-
     def show
     end
 
@@ -32,6 +31,10 @@ class ProductsController < ApplicationController
     end
 
     def create # handles data submitted by the form
+        @product = Product.new(product_params)
+        assign_tags_to_product
+
+
         sanitize_inventory_count_param
         puts "👤 Current user: #{current_user&.id}"  # Debug line
         @product = Product.new(product_params) # filter for security

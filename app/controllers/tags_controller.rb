@@ -7,7 +7,11 @@ class TagsController < ApplicationController
     # runs when /tags is visited 
     # fetches all tags from database and store them in @tags 
     def index 
-        @tags = Tag.all 
+        if params[:query].present? 
+            @tags = Tag.where("name LIKE ?", "%#{params[:query]}%")
+        else 
+            @tags = Tag.all 
+        end
     end
 
     def show
