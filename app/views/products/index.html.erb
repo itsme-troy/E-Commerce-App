@@ -3,16 +3,16 @@
   <!-- Sidebar Filter -->
   <aside class="sidebar">
 
-    <!-- Product Search -->
+    <!-- Product Search
     <%= form_with url: products_path, method: :get, local: true do %>
         <div>
             <label>Search Product</label>
-            <%= text_field_tag :query, params[:query], placeholder: "Enter product name" %>
+            <%= text_field_tag :query, params[:query], placeholder: "Search product or tags" %>
         </div>
-    <% end %>
+    <% end %>  -->
 
     <form id="price-form" action="<%= products_path %>" method="get">
-        <label>Filter by Price</label>
+        <label> Filter by Price </label>
         <div id="price-slider"></div>
 
         <!-- Hidden fields for submission -->
@@ -29,7 +29,7 @@
 
 
 <%# when user selects category, keeps min and max proce, query, applies selected category  %>  
-    <h5>Filter by Category</h5>
+    <label>Filter by Category</label>
     <div class="category-scroll">     
         <ul class="category-list">
             <% @categories.each do |category| %>
@@ -46,12 +46,12 @@
         </ul>
     </div> 
 
-
-
-
-
+    <div class="reset-button-wrapper">
+        <%= link_to "Reset Filters", products_path, class: "btn btn-reset" %>
+    </div>
 
   </aside>
+
 
   <!-- Main Content -->
   <div class="main-content">
@@ -66,7 +66,7 @@
        
         <%= form_with url: products_path, method: :get, local: true, class: "search-form" do %>
           <div class="search-wrapper">
-            <%= text_field_tag :query, params[:query], placeholder: "Search products...", class: "search-input" %>
+            <%= text_field_tag :query, params[:query], placeholder: "Search product or tags", class: "search-input" %>
             <button type="submit" class="search-icon-btn">
               <i class="fas fa-search"></i>
             </button>
@@ -86,14 +86,22 @@
         </tr>
       </thead>
       <tbody>
-        <% @products.each_with_index do |product, index| %>
-          <tr onclick="window.location='<%= product_path(product) %>'" style="cursor: pointer;">
-            <td class="counter-col"> <%= index + 1 %></td>
-            <td><%= product.name %></td>
-            <td><%= product.category&.name || "Uncategorized" %></td>
-            <td>₱<%= number_with_precision(product.price) if product.price.present? %></td>
-          </tr>
-        <% end %>
+        <% if @products.any? %> 
+            <% @products.each_with_index do |product, index| %>
+            <tr onclick="window.location='<%= product_path(product) %>'" style="cursor: pointer;">
+                <td class="counter-col"> <%= index + 1 %></td>
+                <td><%= product.name %></td>
+                <td><%= product.category&.name || "Uncategorized" %></td>
+                <td>₱<%= number_with_precision(product.price) if product.price.present? %></td>
+            </tr>
+            <% end %>
+        <% else %> 
+            <tr> 
+                <td colspan="4" class= "text-center text-muted"> No products found. </td>  
+            </tr> 
+
+        <% end %> 
+
       </tbody>
     </table>
   </div>

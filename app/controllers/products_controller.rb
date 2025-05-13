@@ -35,7 +35,14 @@ class ProductsController < ApplicationController
       
         # Apply search filter if query is present
         if params[:query].present?
-          @products = @products.where("name LIKE ?", "%#{params[:query]}%")
+            query = "%#{params[:query].downcase}%"
+            @products = @products
+            # joins the tags table without excluding products that dont have tags 
+            .left_joins(:tags) 
+            # enables case insensitive search 
+            .where("LOWER(products.name) LIKE :query OR LOWER(tags.name) LIKE :query", query: query)
+            # prevents duplicate rows if multiple tags match 
+            .distinct
         end
       end
 
