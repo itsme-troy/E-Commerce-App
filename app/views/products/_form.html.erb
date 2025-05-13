@@ -36,8 +36,13 @@
     </div>
 
     <div class="form-group">
-        <%= form.label :category_id %>
-        <%= form.collection_select :category_id, Category.all, :id, :name, include_blank: true %>
+        <%= form.label :category_id, "Category" %>
+        <%= form.collection_select :category_id, Category.all, :id, :name, { prompt: "Select or add new..." }, { id: "category-select", class: "form-control" } %>
+
+        <div id="new-category-field" style="display: none; margin-top: 10px;">
+        <%= label_tag :new_category_name, "New Category Name" %>
+        <%= text_field_tag :new_category_name, nil, class: "form-control" %>
+        </div>
     </div>
 
     <div class="form-group">
@@ -51,11 +56,17 @@
         <%= form.rich_text_area :description %>
     </div>
  
+    <!-- Existing tag selection -->
     <div class="form-group">
-        <%= form.label :tag_ids, "Tags" %>
+        <%= form.label :tag_ids, "Tags (select existing)" %>
         <%= form.collection_select :tag_ids, Tag.all, :id, :name, {}, { multiple: true, class: "form-control" } %>
     </div>
-    
+
+    <div class="form-group">
+        <%= label_tag :new_tag_names, "New Tags (comma-separated)" %>
+        <%= text_field_tag :new_tag_names, "", placeholder: "e.g. organic, waterproof", class: "form-control" %>
+    </div>
+        
     <div class="form-actions">
         <%= form.submit "Save Product", class: "btn" %>
     </div>

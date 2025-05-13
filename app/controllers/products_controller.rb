@@ -4,6 +4,23 @@ class ProductsController < ApplicationController
     # allows extraction shared code between actions and run it before the action
     before_action :set_product, only: %i[ show edit update destroy]
 
+    def assign_tags_to_product(product)
+        # 1. Assign selected existing tags
+        selected_tag_ids = params[:product][:tag_ids].reject(&:blank?) if params[:product][:tag_ids]
+        tags = Tag.where(id: selected_tag_ids)
+
+        # 2. Create new tags if any
+        if params[:new_tag_names].present?
+            new_tag_names = params[:new_tag_names].split(",").map(&:strip).reject(&:blank?)
+            new_tags = new_tag_names.map { |name| Tag.find_or_create_by(name: name.downcase) }
+            tags += new_tags
+        end
+
+        # 3. Assign all tags to product
+        # uniq ensures no duplicates are made
+        product.tags = tags.uniq
+    end
+
     def index
         @categories = Category.all
       
@@ -30,17 +47,23 @@ class ProductsController < ApplicationController
         @product = Product.new(inventory_count: 0)
     end
 
-    def create # handles data submitted by the form
-        @product = Product.new(product_params)
-        assign_tags_to_product
+    def create
+        # Step 1: If a new category name is provided, create/find it and inject its ID
+        if params[:new_category_name].present?
+            new_category = Category.find_or_create_by(name: params[:new_category_name])
+            params[:product][:category_id] = new_category.id
+        end
 
-
+        # Step 2: Sanitize inventory field if empty
         sanitize_inventory_count_param
-        puts "👤 Current user: #{current_user&.id}"  # Debug line
-        @product = Product.new(product_params) # filter for security
-        @product.creator = current_user # assign the logged-in user
 
+        # Step 3: Initialize product with permitted params
+        @product = Product.new(product_params)
+        @product.creator = current_user
+
+        # assign tags to product after save 
         if @product.save
+            assign_tags_to_product(@product)
             redirect_to @product, notice: "Product created successfully"
         else
             render :new, status: :unprocessable_entity

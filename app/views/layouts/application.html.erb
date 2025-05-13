@@ -75,4 +75,19 @@
       setTimeout(() => alert.remove(), 1000);
     });
   }, 5000); // delay before fading starts
+
+    // allows users to select new category field
+    document.addEventListener("DOMContentLoaded", function () {
+        const select = document.getElementById("category-select");
+        const newField = document.getElementById("new-category-field");
+
+        select.addEventListener("change", function () {
+            if (select.value === "") {
+            newField.style.display = "block";
+            } else {
+            newField.style.display = "none";
+            }
+        });
+    });
+
 </script>

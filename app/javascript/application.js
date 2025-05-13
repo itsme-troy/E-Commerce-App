@@ -19,9 +19,9 @@ document.addEventListener("turbo:load", function () {
   
 // use URL params (params[:min_price]/
 // params[:max_price]) to initialize the slider values
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("turbo:load", function () {
   const slider = document.getElementById('price-slider');
-  if (!slider) return;
+  if (!slider || slider.noUiSlider) return; // prevent double initialization 
 
   const minPriceParam = parseInt(document.getElementById("min-price-input")?.value || "0", 10);
   const maxPriceParam = parseInt(document.getElementById("max-price-input")?.value || "5000", 10);
