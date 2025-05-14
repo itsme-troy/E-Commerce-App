@@ -22,7 +22,15 @@ module Authentication
     end
 
     def resume_session
-      Current.session ||= find_session_by_cookie
+      return true if Current.user.present? # Already authenticated 
+
+      if (session = find_session_by_cookie)
+        Current.session = session
+        Current.user = session.user 
+            return true
+      end
+
+      false 
     end
 
     def find_session_by_cookie

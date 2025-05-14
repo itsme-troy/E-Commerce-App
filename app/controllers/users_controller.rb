@@ -38,7 +38,7 @@ skip_before_action :require_authentication, only: [:new, :create]
 
   # requires email, password, confirmation and role 
   def user_params
-    params.require(:user).permit(:email_address, :password, :password_confirmation, :role)
+    params.require(:user).permit(:first_name, :last_name, :email_address, :password, :password_confirmation, :role)
   end
 
 end

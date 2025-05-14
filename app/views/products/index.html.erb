@@ -62,11 +62,20 @@
     <div class="header-container">
       <h1 class="page-title">Products</h1>
       <div class="header-buttons">
-        <%= link_to new_product_path, class: "btn btn-success icon-spacing responsive-button" do %>
-            <i class="fas fa-plus"></i>
-            <span class="button-text">New</span>
+            
+        <% if Current.user.present? %>
+        <div>
+            Current role: <%= Current.user.role %>
+        </div>
         <% end %>
-       
+
+        <% if Current.user&.role == "admin" %>     
+            <%= link_to new_product_path, class: "btn btn-success icon-spacing responsive-button" do %>
+                <i class="fas fa-plus"></i>
+                <span class="button-text">New</span>
+            <% end %>
+        <% end %> 
+
         <%= form_with url: products_path, method: :get, local: true, class: "search-form" do %>
           <div class="search-wrapper">
             <%= text_field_tag :query, params[:query], placeholder: "Search product or tags", class: "search-input" %>

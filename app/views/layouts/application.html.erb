@@ -43,7 +43,6 @@
         </div>
 
         <div class="right"> 
-            
             <% if authenticated? %>
                 <%= link_to "Admin Panel", admin_users_path %>
                 <%= link_to "Categories", categories_path %>
@@ -62,6 +61,12 @@
     <main>
         <%= yield %>
     </main>
+
+    <% if Current.user.present? %>
+        <div class="logged-in-indicator"> 
+            Logged in as: <strong> <%= Current.user.full_name %> </strong> (<%= Current.user.role %>)
+        </div>
+    <% end %> 
   </body>
 </html>
 

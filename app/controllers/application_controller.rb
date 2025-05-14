@@ -1,5 +1,7 @@
 class ApplicationController < ActionController::Base
   include Authentication
+  before_action :set_current_user 
+
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
 
@@ -21,4 +23,19 @@ class ApplicationController < ActionController::Base
       redirect_to root_path, alert: "Admins only!"
     end
   end
+
+  helper_method :current_user
+
+  def current_user
+    Current.user
+  end
+  
+  private 
+
+  def set_current_user
+    if session[:user_id]
+        Current.user = User.find_by(id: session[:user_id])
+    end
+  end
+
 end

@@ -1,8 +1,12 @@
 class ProductsController < ApplicationController
-    allow_unauthenticated_access only: %i[ index show ]
+    before_action :require_authentication
+    
+    # run require_admin before actions where an admin is required 
+    before_action :require_admin, only: %i[new create edit update destroy]
 
     # allows extraction shared code between actions and run it before the action
-    before_action :set_product, only: %i[ show edit update destroy]
+    # run set_product only when operating on specific product 
+    before_action :set_product, only: %i[show edit update destroy]
 
     def assign_tags_to_product(product)
         # 1. Assign selected existing tags
@@ -85,7 +89,7 @@ class ProductsController < ApplicationController
 
         # Step 3: Initialize product with permitted params
         @product = Product.new(product_params)
-        @product.creator = current_user
+        @product.creator = Current.user
 
         # assign tags to product after save 
         if @product.save
