@@ -29,13 +29,36 @@
     </tr>
   </thead>
   <tbody>
-    <% @tags.each_with_index do |tag, index| %>
-      <tr onclick="window.location='<%= tag_path(tag) %>'" style="cursor: pointer;">
-        <td class="counter-col"> <%= index + 1 %></td>
-        <td><%= tag.name %></td>
-      
-        </td>
-      </tr>
+    <% if @tags.any? %> 
+        <% @tags.each_with_index do |tag, index| %>
+        <tr onclick="window.location='<%= tag_path(tag) %>'" style="cursor: pointer;">
+            <td class="counter-col"> <%= @tags.offset_value + index + 1 %></td>
+            <td><%= tag.name %></td>
+        </tr>
+        <% end %>
+    <% else %>
+        <tr> 
+            <td colspan="2" class= "text-center text-muted"> No tags found. </td>  
+        </tr> 
     <% end %>
   </tbody>
 </table>
+
+<div class="pagination-stack-wrapper"> 
+    <%# Pagination summary %>
+    <% if @tags.total_count > 0 %>
+        <div class="pagination-summary text-muted text-end">
+            Showing <%= @tags.offset_value + 1 %>–
+            <%= [@tags.offset_value + @tags.limit_value, @tags.total_count].min %>
+            of <%= @tags.total_count %> tags
+        </div>
+    <% end %>
+
+    <%# Pagination controls %>
+    <div class="pagination-controls">
+        <%= paginate @tags %>
+    </div> 
+</div>
+
+
+

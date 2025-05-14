@@ -22,16 +22,34 @@ class ProductsController < ApplicationController
     end
 
     def index
+        # @products = Todo.page(params[:page])
         @categories = Category.all
-      
+        @tags = []
+
         # Start with all products
         @products = Product.all
-        @products = @products.where(price: params[:min_price]..params[:max_price]) if params[:min_price].present? && params[:max_price].present?
+
+        # Filter by price range
+        if params[:min_price].present? && params[:max_price].present?
+            @products = @products.where(price: params[:min_price]..params[:max_price])
+        end
 
         # Filter by category if category_id param is present
         if params[:category_id].present?
           @products = @products.where(category_id: params[:category_id])
+            
+          # collect tags only when a category is selected 
+          # Get all tags associated with products in this category
+          @tags = Tag.joins(:products)
+          .where(products: { category_id: params[:category_id] })
+          .distinct
         end
+
+        # Filter by tag (after category filter)
+        if params[:tag_id].present?
+            @products = @products.joins(:tags).where(tags: { id: params[:tag_id] })
+        end
+
       
         # Apply search filter if query is present
         if params[:query].present?
@@ -44,6 +62,7 @@ class ProductsController < ApplicationController
             # prevents duplicate rows if multiple tags match 
             .distinct
         end
+        @products = @products.page(params[:page]).per(10)
       end
 
     def show

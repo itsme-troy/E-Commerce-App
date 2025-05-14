@@ -12,7 +12,7 @@ class Admin::UsersController < ApplicationController
     end
     # list all users in the system 
     def index
-      @users = User.all
+      @users = User.page(params[:page]).per(10)
     end
 
     # fetch specific user based on passed ID 

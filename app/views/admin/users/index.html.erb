@@ -12,10 +12,27 @@
   <tbody>
     <% @users.each_with_index do |user, index| %>
       <tr onclick="window.location='<%= admin_user_path(user) %>'" style="cursor: pointer;">
-        <td> <%= index + 1 %> </td> 
+        <td> <%= @users.offset_value + index + 1%> </td> 
         <td><%= user.email_address %></td>
         <td><%= user.role %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+ <div class="pagination-stack-wrapper"> 
+        <%# Pagination summary %>
+        <% if @users.total_count > 0 %>
+            <div class="pagination-summary text-muted text-end">
+                Showing <%= @users.offset_value + 1 %>–
+                <%= [@users.offset_value + @users.limit_value, @users.total_count].min %>
+                of <%= @users.total_count %> users
+            </div>
+        <% end %>
+
+        <%# Pagination controls %>
+        <div class="pagination-controls">
+            <%= paginate @users %>
+        </div> 
+    </div>
+

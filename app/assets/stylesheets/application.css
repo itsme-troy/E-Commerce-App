@@ -12,7 +12,7 @@
  body {
     font-family: Arial, Helvetica, sans-serif;
     padding: 1rem;
-    background-color: #858585; /* softer light gray */
+    background-color: #f5f5f5; /* softer light gray */
     color: #333; /* dark gray text for contrast */
 
   }
@@ -138,7 +138,7 @@
   .table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 2rem;
+    margin-top: 1rem;
   }
   
   .table th,

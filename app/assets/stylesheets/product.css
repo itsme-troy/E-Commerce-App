@@ -5,14 +5,19 @@
 
 /* Sidebar container */
 .sidebar {
-  background-color: #fff;
+  background-color: #ffffff;
   padding: 20px;
   border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-  width: 260px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  max-width: 250px;
+  max-height: 700px;
   font-family: 'Segoe UI', sans-serif;
+  width: 100%;
 }
 
+.price-display{ 
+  font-size: 0.9rem;
+}
 .sidebar label {
   font-weight: bold;
   display: block;
@@ -64,7 +69,7 @@
 }
 
 #price-form {
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 #price-form span { 
@@ -79,14 +84,16 @@
 
 
 .category-scroll { 
-    max-height: 240px;
+    max-height: 330px;
     overflow-y: auto;
     padding-right: 5px;
     margin-bottom: 20px;
     border-bottom: 1px solid #e0e0e0; 
+    border-top: 1px solid #eee;
+    padding-top: 10px;
 }
 
-/* Optional scrollbar styling (modern browsers) */
+/*  scrollbar styling (modern browsers) */
 .category-scroll::-webkit-scrollbar {
   width: 6px;
 }
@@ -216,8 +223,6 @@
 
 
 
-
-
   /* index page */
 
 .reset-button-wrapper {
@@ -238,4 +243,86 @@
   }
 .reset-button-wrapper .btn {
   min-width: 120px;
+}
+
+
+
+.pagination {
+  display: inline-flex;
+  list-style: none;
+  padding: 0;
+
+}
+
+
+.pagination a,
+.pagination span {
+  display: inline-block;
+  padding: 6px 12px;
+  min-width: 38px;
+  text-align: center;
+  text-decoration: none;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #fff;
+  color: #007bff;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+}
+
+
+.pagination a:hover {
+  background-color: #e6f0ff;
+  border-color: #aad4ff;
+}
+
+
+.pagination .current,
+.pagination .page-item.active .page-link {
+  background-color: #007bff;
+  color: #fff;
+  border-color: #007bff;
+  pointer-events: none;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0, 123, 255, 0.3);
+}
+
+.pagination .disabled span,
+.pagination .disabled a {
+  color: #aaa;
+  background-color: #f0f0f0;
+  border-color: #ddd;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.pagination-summary {
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+
+.pagination-stack-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0px;
+    margin-top: 0px;
+}
+
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+}
+
+
+
+.tag-list {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
 }

@@ -12,6 +12,8 @@ class TagsController < ApplicationController
         else 
             @tags = Tag.all 
         end
+
+        @tags = @tags.page(params[:page]).per(10)
     end
 
     def show

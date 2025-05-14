@@ -1,46 +1,50 @@
 <div class="products-page">
 
   <!-- Sidebar Filter -->
-  <aside class="sidebar">
+  <aside class="sidebar card shadow-sm p-4 rounded-3 bg-white">
 
-    <!-- Product Search
-    <%= form_with url: products_path, method: :get, local: true do %>
-        <div>
-            <label>Search Product</label>
-            <%= text_field_tag :query, params[:query], placeholder: "Search product or tags" %>
-        </div>
-    <% end %>  -->
 
+    <label> Price</label> 
     <form id="price-form" action="<%= products_path %>" method="get">
-        <label> Filter by Price </label>
-        <div id="price-slider"></div>
+        <div id="price-slider" class="mb-1"></div>
 
         <!-- Hidden fields for submission -->
         <input type="hidden" name="min_price" id="min-price-input" value="<%= params[:min_price] || 0 %>">
         <input type="hidden" name="max_price" id="max-price-input" value="<%= params[:max_price] || 5000 %>">
 
-        <div style="margin-top: 10px;">
-            <span>Price: ₱<span id="min-price-display"></span></span>
-            –
-            <span>₱<span id="max-price-display"></span></span>
-        </div>
-
+          <p class="price-display mb-4 text-muted">
+            Price: ₱<span id="min-price-display"></span> – ₱<span id="max-price-display"></span>
+        </p>
     </form>
 
-
 <%# when user selects category, keeps min and max proce, query, applies selected category  %>  
-    <label>Filter by Category</label>
+    <label> Categories </label>
     <div class="category-scroll">     
-        <ul class="category-list">
+        <ul class="list-unstyled category-list">
             <% @categories.each do |category| %>
-                <li>
+                <li class="mb-2">
                 <%= link_to category.name, products_path(
                         category_id: category.id,
                         min_price: params[:min_price],
                         max_price: params[:max_price],
                         query: params[:query]
                     ),
-                    class: (params[:category_id].to_i == category.id ? "active" : "") %>
+                    class: "category-link #{'active' if params[:category_id].to_i == category.id}" %>
+
+                    <%# only show tags if this category is currently selected %> 
+                    <% if params[:category_id].to_i == category.id && @tags.present? %> 
+                        <div class="tag-list mt-2">
+                            <% @tags.each do |tag| %>
+                                <%= link_to tag.name, products_path(
+                                    category_id: category.id, 
+                                    tag_id: tag.id, 
+                                    min_price: params[:min_price], 
+                                    max_price: params[:max_price], 
+                                    query: params[:query] 
+                                ), class: "badge me-1 #{params[:tag_id].to_i == tag.id ? 'bg-primary text-white' : 'bg-light text-dark'} text-decoration-none" %>
+                            <% end %>
+                        </div>
+                    <% end %>
                 </li>
             <% end %>
         </ul>
@@ -62,7 +66,6 @@
             <i class="fas fa-plus"></i>
             <span class="button-text">New</span>
         <% end %>
-
        
         <%= form_with url: products_path, method: :get, local: true, class: "search-form" do %>
           <div class="search-wrapper">
@@ -89,20 +92,35 @@
         <% if @products.any? %> 
             <% @products.each_with_index do |product, index| %>
             <tr onclick="window.location='<%= product_path(product) %>'" style="cursor: pointer;">
-                <td class="counter-col"> <%= index + 1 %></td>
+                <td class="counter-col"> <%= @products.offset_value + index + 1 %></td>
                 <td><%= product.name %></td>
                 <td><%= product.category&.name || "Uncategorized" %></td>
-                <td>₱<%= number_with_precision(product.price) if product.price.present? %></td>
+                <td>₱<%= number_with_precision(product.price || 0, precision: 2) %></td>
             </tr>
             <% end %>
         <% else %> 
             <tr> 
                 <td colspan="4" class= "text-center text-muted"> No products found. </td>  
             </tr> 
-
         <% end %> 
-
       </tbody>
-    </table>
+    </table>    
+
+    <div class="pagination-stack-wrapper"> 
+        <%# Pagination summary %>
+        <% if @products.total_count > 0 %>
+            <div class="pagination-summary text-muted text-end">
+                Showing <%= @products.offset_value + 1 %>–
+                <%= [@products.offset_value + @products.limit_value, @products.total_count].min %>
+                of <%= @products.total_count %> products
+            </div>
+        <% end %>
+
+        <%# Pagination controls %>
+        <div class="pagination-controls">
+            <%= paginate @products %>
+        </div> 
+    </div>
+
   </div>
 </div>
