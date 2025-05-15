@@ -5,9 +5,12 @@
 # urls : 'admin/users'
 
 class Admin::UsersController < ApplicationController
+    
+    before_action :require_admin, only: %i[edit update destroy]
     # before_action :require_admin
     before_action :set_user, only: [:show, :edit, :update, :destroy]
   
+    
     def show
     end
     # list all users in the system 

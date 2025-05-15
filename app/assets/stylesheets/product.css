@@ -57,7 +57,7 @@
 .category-list a.active{
     font-weight: bold;
     color: #007bff;
-    text-decoration: underline; 
+    text-decoration: none; 
 }
 
 .sidebar h5 {

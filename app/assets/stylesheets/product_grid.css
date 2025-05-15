@@ -1,0 +1,42 @@
+
+
+/* app/assets/stylesheets/products_grid.css */
+
+/* Container for the entire grid */
+.product-grid-container {
+  margin-top: 2rem;
+}
+
+/* Product card enhancements */
+.product-gridcard {
+  border-radius: 0.5rem;
+  transition: transform 0.2s ease-in-out;
+}
+
+.product-grid-card:hover {
+  transform: scale(1.02);
+}
+
+/* Card title link */
+.product-grid-card .card-title a {
+  color: #333;
+  text-decoration: none;
+}
+
+.product-grid-card .card-title a:hover {
+  text-decoration: underline;
+}
+
+/* Product image */
+.product-grid-card .card-img-top {
+  height: 180px;
+  object-fit: cover;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+
+/* Tag badges */
+.product-grid-card .badge {
+  font-size: 0.75rem;
+  padding: 0.4em 0.6em;
+}

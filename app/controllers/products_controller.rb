@@ -26,6 +26,10 @@ class ProductsController < ApplicationController
     end
 
     def index
+        # set max price for products 
+        @max_price = Product.maximum(:price).to_i
+        @max_price = 5000 if @max_price < 5000  # Ensure default floor
+        
         # @products = Todo.page(params[:page])
         @categories = Category.all
         @tags = []

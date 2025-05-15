@@ -4,17 +4,25 @@
   <aside class="sidebar card shadow-sm p-4 rounded-3 bg-white">
 
 
-    <label> Price</label> 
+    <div class="d-flex align-items-center justify-content-between gap-2 mb-2">
+        <label class="mb-0">Price</label>
+        <button type="button" id="init-slider" class="btn btn-reset btn-sm" style="display: none;">
+             Restore Price Filter
+        </button>
+    </div>
     <form id="price-form" action="<%= products_path %>" method="get">
+        
         <div id="price-slider" class="mb-1"></div>
 
         <!-- Hidden fields for submission -->
         <input type="hidden" name="min_price" id="min-price-input" value="<%= params[:min_price] || 0 %>">
-        <input type="hidden" name="max_price" id="max-price-input" value="<%= params[:max_price] || 5000 %>">
+        <input type="hidden" name="max_price" id="max-price-input" value="<%= params[:max_price] || @max_price %>">
 
           <p class="price-display mb-4 text-muted">
-            Price: ₱<span id="min-price-display"></span> – ₱<span id="max-price-display"></span>
-        </p>
+            Price: ₱<span id="min-price-display"><%= params[:min_price] || 0 %></span> – ₱<span id="max-price-display"><%= params[:max_price] || @max_price %></span> </p>
+          </p>
+
+          
     </form>
 
 <%# when user selects category, keeps min and max proce, query, applies selected category  %>  
@@ -22,26 +30,18 @@
     <div class="category-scroll">     
         <ul class="list-unstyled category-list">
             <% @categories.each do |category| %>
+
                 <li class="mb-2">
-                <%= link_to category.name, products_path(
-                        category_id: category.id,
-                        min_price: params[:min_price],
-                        max_price: params[:max_price],
-                        query: params[:query]
-                    ),
-                    class: "category-link #{'active' if params[:category_id].to_i == category.id}" %>
+
+                <%= link_to category.name, products_path(preserved_filters(category_id: category.id)), 
+                    class: "category-link filter-link #{'active' if params[:category_id].to_i == category.id}" %>
 
                     <%# only show tags if this category is currently selected %> 
                     <% if params[:category_id].to_i == category.id && @tags.present? %> 
                         <div class="tag-list mt-2">
                             <% @tags.each do |tag| %>
-                                <%= link_to tag.name, products_path(
-                                    category_id: category.id, 
-                                    tag_id: tag.id, 
-                                    min_price: params[:min_price], 
-                                    max_price: params[:max_price], 
-                                    query: params[:query] 
-                                ), class: "badge me-1 #{params[:tag_id].to_i == tag.id ? 'bg-primary text-white' : 'bg-light text-dark'} text-decoration-none" %>
+                                <%= link_to tag.name, products_path(preserved_filters(tag_id: tag.id)), 
+                                     class: "badge me-1 filter-link #{params[:tag_id].to_i == tag.id ? 'bg-primary text-white' : 'bg-light text-dark'} text-decoration-none" %>
                             <% end %>
                         </div>
                     <% end %>
@@ -51,23 +51,16 @@
     </div> 
 
     <div class="reset-button-wrapper">
-        <%= link_to "Reset Filters", products_path, class: "btn btn-reset" %>
+        <button type="button" id="reset-filters" class="btn btn-reset">Reset Filters</button>
     </div>
 
   </aside>
-
 
   <!-- Main Content -->
   <div class="main-content">
     <div class="header-container">
       <h1 class="page-title">Products</h1>
       <div class="header-buttons">
-            
-        <% if Current.user.present? %>
-        <div>
-            Current role: <%= Current.user.role %>
-        </div>
-        <% end %>
 
         <% if Current.user&.role == "admin" %>     
             <%= link_to new_product_path, class: "btn btn-success icon-spacing responsive-button" do %>
@@ -76,7 +69,10 @@
             <% end %>
         <% end %> 
 
-        <%= form_with url: products_path, method: :get, local: true, class: "search-form" do %>
+        <%= form_with url: products_path, method: :get, local: true, html: { class: "search-form" } do %>
+            <%# pass min and max price to preserve price filter%>
+            <%= preserved_filter_fields %>
+
           <div class="search-wrapper">
             <%= text_field_tag :query, params[:query], placeholder: "Search product or tags", class: "search-input" %>
             <button type="submit" class="search-icon-btn">
@@ -95,6 +91,7 @@
           <th>Name</th>
           <th>Category</th>
           <th>Price</th>
+          <th> Tags </th> 
         </tr>
       </thead>
       <tbody>
@@ -105,11 +102,15 @@
                 <td><%= product.name %></td>
                 <td><%= product.category&.name || "Uncategorized" %></td>
                 <td>₱<%= number_with_precision(product.price || 0, precision: 2) %></td>
+                <td>
+                        <% product.tags.each do |tag| %>
+                            <span class="badge bg-secondary mt-1"><%= tag.name %></span>
+                        <% end %>  </td> 
             </tr>
             <% end %>
         <% else %> 
             <tr> 
-                <td colspan="4" class= "text-center text-muted"> No products found. </td>  
+                <td colspan="5" class= "text-center text-muted"> No products found. </td>  
             </tr> 
         <% end %> 
       </tbody>
@@ -133,3 +134,120 @@
 
   </div>
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const slider = document.getElementById("price-slider");
+    const minInput = document.getElementById("min-price-input");
+    const maxInput = document.getElementById("max-price-input");
+    const minDisplay = document.getElementById("min-price-display");
+    const maxDisplay = document.getElementById("max-price-display");
+    const restoreBtn = document.getElementById("init-slider");
+
+    const maxPrice = <%= @max_price %>;
+
+    const minStart = parseInt("<%= params[:min_price].presence || 0 %>") || 0;
+    const maxStart = parseInt("<%= params[:max_price].presence || @max_price %>") || maxPrice;
+
+    const initializeSlider = () => {
+      if (!slider || slider.noUiSlider) return;
+
+      noUiSlider.create(slider, {
+        start: [minStart, maxStart],
+        connect: true,
+        step: 1,
+        range: {
+          min: 0,
+          max: maxPrice
+        },
+        format: {
+          to: value => Math.round(value),
+          from: value => Number(value)
+        }
+      });
+
+      slider.noUiSlider.on("update", function (values) {
+        const min = Math.round(values[0]);
+        const max = Math.round(values[1]);
+
+        minInput.value = min;
+        maxInput.value = max;
+
+        minDisplay.textContent = min;
+        maxDisplay.textContent = max >= maxPrice ? `${max}+` : max;
+      });
+
+      slider.noUiSlider.on("change", function () {
+        document.getElementById("price-form").submit();
+      });
+    };
+
+    // Try to initialize, show restore button if error
+    try {
+      initializeSlider();
+    } catch (e) {
+      if (restoreBtn) restoreBtn.style.display = "inline-block";
+    }
+
+    // Manual restore if button clicked
+    restoreBtn?.addEventListener("click", () => {
+      initializeSlider();
+      restoreBtn.style.display = "none";
+    });
+
+    // Back-forward navigation restore (bfcache)
+    window.addEventListener("pageshow", function (event) {
+      if (event.persisted || performance.getEntriesByType("navigation")[0]?.type === "back_forward") {
+        if (!slider.noUiSlider) {
+          initializeSlider();
+        }
+      }
+    });
+
+    // Maintain min/max when clicking category/tag
+    const links = document.querySelectorAll(".filter-link");
+    links.forEach(link => {
+      link.addEventListener("click", function (e) {
+        e.preventDefault();
+        const url = new URL(link.href);
+        url.searchParams.set("min_price", minInput.value || 0);
+        url.searchParams.set("max_price", maxInput.value || maxPrice);
+        const queryInput = document.querySelector("input[name='query']");
+        if (queryInput && queryInput.value) {
+          url.searchParams.set("query", queryInput.value);
+        }
+        window.location.href = url.toString();
+      });
+    });
+
+    // Inject current min/max into search form before submit
+    const searchForm = document.querySelector(".search-form");
+    const searchMin = document.getElementById("search-min-price");
+    const searchMax = document.getElementById("search-max-price");
+
+    if (searchForm) {
+      searchForm.addEventListener("submit", function () {
+        if (searchMin) searchMin.value = minInput.value || 0;
+        if (searchMax) searchMax.value = maxInput.value || maxPrice;
+      });
+    }
+  });
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  const resetBtn = document.getElementById("reset-filters");
+
+  if (resetBtn) {
+    resetBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      // Redirect to clean /products page (to remove filters)
+      window.location.href = "<%= products_path %>";
+      
+      // OR if you just want to reload current page:
+      //window.location.reload(); 
+    });
+  }
+});
+</script>
+
+

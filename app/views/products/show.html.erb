@@ -24,7 +24,7 @@
         <%= @product.tags.map(&:name).join(", ") %>
     </p>
 
-    <% if authenticated? %>
+    <% if current_user&.role == "admin" %>
         <div class="product-actions">
             <%= link_to "Update", edit_product_path(@product), class: "btn edit" %>
             <%= button_to "Delete", @product, method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "btn delete" %>

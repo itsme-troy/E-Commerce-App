@@ -1,7 +1,42 @@
 <%= render @category %>
 
-<div class="category-buttons">
-  <%= link_to "Back to categories", categories_path, class: "btn back" %>
-  <%= link_to "Update", edit_category_path(@category), class: "btn edit" %>
-  <%= button_to "Delete", @category, method: :delete, data: { confirm: "Are you sure?" }, class: "btn delete" %>
+<div class="container product-grid-container">
+
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+    <% @products.each do |product| %>
+      <div class="col">
+        <div class="card product-grid-card h-100 shadow-sm border-0">
+          <% if product.featured_image.attached? %>
+            <%= image_tag product.featured_image, class: "card-img-top" %>
+          <% end %>
+
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title mb-1">
+              <%= link_to product.name, product_path(product) %>
+            </h5>
+            <p class="card-text text-primary fw-bold mb-1">₱<%= number_to_currency(product.price, unit: "", precision: 2) %></p>
+            <p class="card-text text-muted mb-1"><strong>Stock:</strong> <%= product.inventory_count %></p>
+
+            <% if product.tags.any? %>
+              <div class="mt-2">
+                <% product.tags.each do |tag| %>
+                  <span class="badge bg-light text-dark border me-1"><%= tag.name %></span>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+
+          <div class="card-footer bg-white border-0 d-flex justify-content-between align-items-center">
+            <%= link_to "View", product_path(product), class: "btn btn-outline-primary btn-sm" %>
+            <% if Current.user&.role == "admin" %>
+              <div class="btn-group">
+                <%= link_to "Edit", edit_product_path(product), class: "btn btn-warning btn-sm" %>
+                <%= button_to "Delete", product, method: :delete, data: { confirm: "Delete this product?" }, class: "btn btn-danger btn-sm" %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
 </div>

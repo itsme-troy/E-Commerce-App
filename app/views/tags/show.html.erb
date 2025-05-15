@@ -3,7 +3,12 @@
 
 
 <div class="category-buttons">
+
+
     <%= link_to "Back to tags", tags_path, class: "btn back" %>
-    <%= link_to "Edit", edit_tag_path(@tag), class: "btn btn-primary" %>
-    <%= button_to "Delete", @tag, method: :delete, data: { confirm: "Are you sure?" }, class: "btn delete" %>
+
+    <% if Current.user&.role == "admin" %>     
+        <%= link_to "Edit", edit_tag_path(@tag), class: "btn btn-primary" %>
+        <%= button_to "Delete", @tag, method: :delete, data: { confirm: "Are you sure?" }, class: "btn delete" %>
+    <% end %>
 </div>
