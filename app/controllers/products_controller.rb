@@ -110,6 +110,7 @@ class ProductsController < ApplicationController
     def update
         sanitize_inventory_count_param
         if @product.update(product_params)
+          assign_tags_to_product(@product) 
           redirect_to @product, notice: "Product updated successfully!" # success message
         else
           render :edit, status: :unprocessable_entity
@@ -139,6 +140,7 @@ class ProductsController < ApplicationController
         end
 
         # ensures if inventory count is blank or deleted, rails treat it as default 0
+        # this avoids sending empty string in the server ""
         def sanitize_inventory_count_param
             if params[:product][:inventory_count].blank?
               params[:product][:inventory_count] = 0

@@ -17,6 +17,7 @@
 
 .price-display{ 
   font-size: 0.9rem;
+  margin-bottom: 0;
 }
 .sidebar label {
   font-weight: bold;
@@ -81,6 +82,51 @@
 #price-slider {
   margin: 10px 0 16px 0;
 }
+
+
+/* Customize noUiSlider handles to be minimalist circular style */
+.noUi-horizontal .noUi-handle {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: white;
+  border: 2px solid #82b1ff; /* Soft blue border */
+  top: -6px; /* Vertically center the handle */
+  cursor: pointer;
+  box-shadow: none;
+  transition: box-shadow 0.2s ease;
+}
+
+.noUi-horizontal .noUi-handle:hover,
+.noUi-horizontal .noUi-handle:focus {
+  box-shadow: 0 0 0 4px rgba(130, 177, 255, 0.3); /* subtle glow */
+}
+
+.noUi-connect {
+  background: #82b1ff; /* Fill between handles */
+}
+
+.noUi-target {
+  border-radius: 4px;
+  background: #e0e0e0;
+  height: 4px;
+}
+
+/* Add a clean top and bottom border */
+.price-filter-section {
+  border-top: 1px solid #dee2e6; /* Bootstrap light gray */
+  border-bottom: 1px solid #dee2e6;
+}
+
+
+/* Optional: improve label spacing */
+.price-filter-section label {
+  font-size: 0.95rem;
+  color: #333;
+}
+
+
+
 
 
 .category-scroll { 

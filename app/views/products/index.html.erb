@@ -2,28 +2,26 @@
 
   <!-- Sidebar Filter -->
   <aside class="sidebar card shadow-sm p-4 rounded-3 bg-white">
+      
+      <!--  Price Filter Slider (HTML) -->
 
+    <div class="price-filter-section border-y py-3 mb-3">
+          <label class="mb-2">Price</label>
 
-    <div class="d-flex align-items-center justify-content-between gap-2 mb-2">
-        <label class="mb-0">Price</label>
-        <button type="button" id="init-slider" class="btn btn-reset btn-sm" style="display: none;">
-             Restore Price Filter
-        </button>
+        <form id="price-form" action="<%= products_path %>" method="get">
+            
+            <div id="price-slider" class="mb-2"></div>
+
+            <!-- Hidden fields for submission -->
+            <input type="hidden" name="min_price" id="min-price-input" value="<%= params[:min_price] || 0 %>">
+            <input type="hidden" name="max_price" id="max-price-input" value="<%= params[:max_price] || @max_price %>">
+
+            <p class="price-display text-muted small">
+                <strong> Range:</strong> ₱<span id="min-price-display"><%= params[:min_price] || 0 %></span> – ₱<span id="max-price-display"><%= params[:max_price] || @max_price %></span> </p>
+            </p>
+
+        </form>
     </div>
-    <form id="price-form" action="<%= products_path %>" method="get">
-        
-        <div id="price-slider" class="mb-1"></div>
-
-        <!-- Hidden fields for submission -->
-        <input type="hidden" name="min_price" id="min-price-input" value="<%= params[:min_price] || 0 %>">
-        <input type="hidden" name="max_price" id="max-price-input" value="<%= params[:max_price] || @max_price %>">
-
-          <p class="price-display mb-4 text-muted">
-            Price: ₱<span id="min-price-display"><%= params[:min_price] || 0 %></span> – ₱<span id="max-price-display"><%= params[:max_price] || @max_price %></span> </p>
-          </p>
-
-          
-    </form>
 
 <%# when user selects category, keeps min and max proce, query, applies selected category  %>  
     <label> Categories </label>
