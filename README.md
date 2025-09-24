@@ -1,24 +1,16 @@
 # README
+A full-stack E-Commerce Web Application built with Ruby on Rails, designed to provide a smooth online shopping experience. It features product listings and user authentication. The project follows the MVC architecture of Rails and integrates ActiveRecord for database management.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Key Features
 
-Things you may want to cover:
+🛍️ Product catalog with categories and search
+👤 User authentication & session management
+⚙️ Admin dashboard for product & inventory management
+💾 Database support with Rails ActiveRecord
 
-* Ruby version
+Tech Stack
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Ruby
+Ruby on Rails
+MySQL 
+HTML, CSS, JavaScript (Rails default)
